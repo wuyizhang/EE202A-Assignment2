@@ -72,12 +72,12 @@ int main (int argc, char* argv[])
     while(i < n_timestamps) {
         gpio_set_value(gpio, 1);
         interval.tv_sec = 0;
-        interval.tv_nsec = 1000; // pulse length is at least 10us
+        interval.tv_nsec = 10000; // pulse length is at least 10us
         nanosleep(&interval, &rem);
 
         float diff = timestamps[i] - timestamps[i - 1];
         interval.tv_sec = diff;
-        interval.tv_nsec = (long)(diff * BILLION) - (long)(interval.tv_sec * BILLION);
+        interval.tv_nsec = (long)(diff * BILLION) - (long)(interval.tv_sec * BILLION)-(long)(10000);
         gpio_set_value(gpio, 0);
         nanosleep(&interval, &rem);
     }
